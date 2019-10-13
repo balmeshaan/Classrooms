@@ -54,7 +54,7 @@ def classroom_list(request):
 
 def classroom_detail(request, classroom_id):
 	classroom = Classroom.objects.get(id=classroom_id)
-	students = classroom.student_set.all().order_by('name', 'exam_grade')
+	students = classroom.student_set.all().order_by('name', '-exam_grade')
 	context = {
 		"classroom": classroom,
 		'students': students
@@ -132,7 +132,7 @@ def student_update(request, classroom_id, student_id):
 			if form.is_valid():
 				form.save()
 				messages.success(request, "Successfully Edited!")
-				return redirect('classroom-detail', classroom_id, student_id)
+				return redirect('classroom-detail', classroom_id)
 			print (form.errors)
 		context = {
 		"form": form,
